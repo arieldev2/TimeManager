@@ -39,8 +39,9 @@ final class TimeManager: ObservableObject{
         self.ruleTimeSeconds = ruleTimeSeconds
         self.ruleTimeExtraSeconds = ruleTimeExtraSeconds
         
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
-        self.startTime = calendar.date(from: components)!
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: startTime)
+        guard let newStartDate = calendar.date(from: components) else {return}
+        self.startTime = newStartDate
         self.endTime = startTime.addingTimeInterval(endTimeSeconds)
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     }
